@@ -2,15 +2,18 @@
 library(shiny)
 
 library(dplyr)
+library(rvest)
 
+source('data_import.R')
 source('plot_truncated.R')
 source('plot_model.R')
 source('plot_model_compared.R')
 
 ## SCRIPT ## 
 
-path <- ("/Users/louislimnavong/Documents/GitHub/limnavonglouis/COVID-19/csse_covid_19_data/csse_covid_19_time_series/")
+path <- ("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/")
 
+#data_confirmed <- read_data_from_github(paste(path, "time_series_19-covid-Confirmed.csv", sep = ""))
 data_confirmed <- read.csv(paste(path, "time_series_19-covid-Confirmed.csv", sep = ""))
 data_country <- data_confirmed[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
 

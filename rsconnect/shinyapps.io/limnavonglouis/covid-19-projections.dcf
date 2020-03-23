@@ -5,6 +5,6 @@ account: limnavonglouis
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1984486
-bundleId: 2915315
+bundleId: 2915446
 url: https://limnavonglouis.shinyapps.io/covid-19-projections/
-when: 1585004053.27641
+when: 1585006043.06425
