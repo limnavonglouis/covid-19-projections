@@ -22,9 +22,11 @@ plot_model <- function(new_data, nlm, country_name, n) {
   P = y[1]
   y_fitted <- function_model(x, coef(nlm)['K'],  coef(nlm)['r'], P)
   plot <- ggplot() + 
-    geom_line(aes(x = x, y = y_fitted)) + 
-    geom_line(aes(x = n, y = y, color = 'red')) + 
-    geom_point(aes(x = x, y = y, color = 'red'))
+    geom_line(aes(x = x, y = y_fitted), linetype="dashed") + 
+    geom_line(aes(x = n, y = y)) +
+    geom_point(aes(x = x, y = y, color = 'actual')) + 
+    labs(ylab('cases')) + 
+    labs(xlab('day'))
   
   return(plot)
 }
