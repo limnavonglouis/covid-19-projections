@@ -17,7 +17,7 @@ plot_compared_countries <- function(data_type, country_list, data_country_confir
   new_data <- create_data_compared_countries(country_list, data_country, start)
   melted_data <- melt(new_data, id = 'day')
   plot <- ggplot(melted_data, aes(x = day, y = value, colour = variable)) + 
-    geom_line() 
+    geom_line() + labs(ylab('cases'))
   
   result <- list(plot, new_data)
   return(result)

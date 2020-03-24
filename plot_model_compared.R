@@ -22,7 +22,8 @@ plot_model_compared <- function(data_type, country_list, data_country_confirmed,
   
   plot <- ggplot(data_temp) + 
     geom_line(aes(x = day, y = value.y, color = variable), linetype="dashed") +
-    geom_point(aes(x = day, y = value.x, colour = variable))
+    geom_point(aes(x = day, y = value.x, colour = variable)) + 
+    labs(ylab("cases"))
   
   return(plot)
   

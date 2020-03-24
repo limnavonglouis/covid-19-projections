@@ -43,3 +43,4 @@ plot_main <- function(data_type, data_country_confirmed, data_country_deaths, co
 # 
 # nlm1
 # plot
+
