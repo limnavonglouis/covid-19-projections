@@ -23,15 +23,15 @@ plot_compared_countries <- function(data_type, country_list, data_country_confir
   return(result)
 }
 
-path <- ("/Users/louislimnavong/Documents/GitHub/limnavonglouis/COVID-19/csse_covid_19_data/csse_covid_19_time_series/")
-data <- read.csv(paste(path, "time_series_19-covid-Confirmed.csv", sep = ""))
-data_confirmed <- read.csv(paste(path, "time_series_19-covid-Confirmed.csv", sep = ""))
-data_deaths <- read.csv(paste(path, "time_series_19-covid-Deaths.csv", sep = ""))
-data_country_confirmed <- data_confirmed[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
-data_country_deaths <- data_deaths[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
-
-data_type <- 'deaths'
-country_list <- c('Spain', 'France', 'Italy', 'US')
-start <- 0
-plot_compared_countries(data_type, country_list, data_country_confirmed, data_country_deaths, start)[[1]]
+# path <- ("/Users/louislimnavong/Documents/GitHub/limnavonglouis/COVID-19/csse_covid_19_data/csse_covid_19_time_series/")
+# data <- read.csv(paste(path, "time_series_19-covid-Confirmed.csv", sep = ""))
+# data_confirmed <- read.csv(paste(path, "time_series_19-covid-Confirmed.csv", sep = ""))
+# data_deaths <- read.csv(paste(path, "time_series_19-covid-Deaths.csv", sep = ""))
+# data_country_confirmed <- data_confirmed[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
+# data_country_deaths <- data_deaths[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
+# 
+# data_type <- 'deaths'
+# country_list <- c('Spain', 'France', 'Italy', 'US')
+# start <- 0
+# plot_compared_countries(data_type, country_list, data_country_confirmed, data_country_deaths, start)[[1]]
 

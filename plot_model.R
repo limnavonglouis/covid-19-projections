@@ -22,24 +22,24 @@ plot_main <- function(data_type, data_country_confirmed, data_country_deaths, co
   return(result)
 } 
 
-path <- ("/Users/louislimnavong/Documents/GitHub/limnavonglouis/COVID-19/csse_covid_19_data/csse_covid_19_time_series/")
-
-data_confirmed <- read.csv(paste(path, "time_series_19-covid-Confirmed.csv", sep = ""))
-data_country <- data_confirmed[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
-
-data_deaths <- read.csv(paste(path, "time_series_19-covid-Deaths.csv", sep = ""))
-data_country_deaths <- data_deaths[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
-
-data_type = 'deaths'
-country_name = 'France'
-count_start = 50 
-n = 20
-
-result <- plot_main(data_type, data_country_confirmed, data_country_deaths, 
-                    country_name, count_start, n)
-
-nlm1 <- result[[1]]
-plot <- result[[2]]
-
-nlm1
-plot 
+# path <- ("/Users/louislimnavong/Documents/GitHub/limnavonglouis/COVID-19/csse_covid_19_data/csse_covid_19_time_series/")
+# 
+# data_confirmed <- read.csv(paste(path, "time_series_19-covid-Confirmed.csv", sep = ""))
+# data_country <- data_confirmed[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
+# 
+# data_deaths <- read.csv(paste(path, "time_series_19-covid-Deaths.csv", sep = ""))
+# data_country_deaths <- data_deaths[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
+# 
+# data_type = 'deaths'
+# country_name = 'France'
+# count_start = 50 
+# n = 20
+# 
+# result <- plot_main(data_type, data_country_confirmed, data_country_deaths, 
+#                     country_name, count_start, n)
+# 
+# nlm1 <- result[[1]]
+# plot <- result[[2]]
+# 
+# nlm1
+# plot 
