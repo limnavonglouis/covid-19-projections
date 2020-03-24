@@ -12,14 +12,14 @@ source('plot_model_compared.R')
 path <- ("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/")
 
 data_confirmed <- read.csv(paste(path, "time_series_19-covid-Confirmed.csv", sep = ""))
-data_country <- data_confirmed[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
+data_country_confirmed <- data_confirmed[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
 
 data_deaths <- read.csv(paste(path, "time_series_19-covid-Deaths.csv", sep = ""))
 data_country_deaths <- data_deaths[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
 
 ## VARIABLES ## 
 
-country_choices <- data_country[,'Country.Region']
+country_choices <- data_country_confirmed[,'Country.Region']
 
 ## UI ##
 
@@ -27,8 +27,8 @@ ui <- fluidPage(
     
     titlePanel("Coronavirus Daily Cases Evolution"),
     
-    selectInput("count_selection", "Select the data to plot", choices = c('deaths', 'confirmed'), 
-                selected = 'confirmed', multiple = FALSE, selectize = TRUE), 
+    selectInput("count_selection", "Select the data to plot", choices = c('deaths', 'confirmed cases'), 
+                selected = 'confirmed cases', multiple = FALSE, selectize = TRUE), 
     
     tabsetPanel(
         
@@ -45,7 +45,8 @@ ui <- fluidPage(
                      )
                  ),
                  fluidRow(
-                     dataTableOutput('table_country')
+                     column(1),
+                     column(10,dataTableOutput('table_country'))
                          )
         ),
         
