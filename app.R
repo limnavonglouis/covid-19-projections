@@ -1,11 +1,13 @@
 library(shiny)
+library(shinythemes)
 
 library(dplyr)
 library(rvest)
 
-source('plot_truncated.R')
+source('plot_curve.R')
 source('plot_model.R')
 source('plot_model_compared.R')
+source('plot_truncated.R')
 
 ## SCRIPT ## 
 
@@ -17,13 +19,16 @@ data_country_confirmed <- data_confirmed[,-c(1,3,4)] %>% group_by(Country.Region
 data_deaths <- read.csv(paste(path, "time_series_19-covid-Deaths.csv", sep = ""))
 data_country_deaths <- data_deaths[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
 
+data_recovered <- read.csv(paste(path, "time_series_19-covid-Recovered.csv", sep = ""))
+data_country_recovered <- data_recovered[,-c(1,3,4)] %>% group_by(Country.Region) %>% summarise_all(funs(sum))
+
 ## VARIABLES ## 
 
 country_choices <- data_country_confirmed[,'Country.Region']
 
 ## UI ##
 
-ui <- fluidPage(
+ui <- fluidPage(theme = shinytheme("flatly"),
     
     titlePanel("Covid-19 Daily Cases Evolution"),
     
@@ -81,7 +86,7 @@ ui <- fluidPage(
                          sliderInput("country_count_start", "Select the count start", 
                                      value = 50, min = 0, max = 600),
                          numericInput("country_data", "Select the number of data point", value = 20),
-                         p("Changing the number of data points used to make the projection shows the day-to-day changes of the projection.")
+                         p("Changing the number of data points used to make the estimation shows the day-to-day changes of the projection.")
                         ),
                      mainPanel(
                          plotOutput('plot_main_model')
@@ -109,6 +114,28 @@ ui <- fluidPage(
                             h4(textOutput('r'), align = "center")
                     )
                  )
+         ),
+        
+         tabPanel("Current",
+                  
+                  sidebarLayout(
+                      sidebarPanel(
+                          selectInput("curve_country_list", "Select the list of countries", choices = country_choices,
+                                      selected = c('France', 'China'), multiple = TRUE, selectize = TRUE),
+                          p("The current number of cases is an important indicator to follow for the capacity of health institutions such as hospitals."),
+                          p("Current cases = "),
+                          p("Confirmed cases - Recovered cases - Deaths"),
+                          br(), br(),
+                          selectInput("curve_country_name", "Select the country", choices = country_choices, 
+                                      selected = 'China', multiple = FALSE, selectize = TRUE),
+                          p("The breakdown shows the repartition for a given country.")
+                      ),
+                      mainPanel(
+                          plotOutput('plot_curve_compared'),
+                          plotOutput('plot_breakdown')
+                          
+                      )
+                  )
          )
    ) # end of tabsetPanel 
     
@@ -155,6 +182,15 @@ server <- function(input, output) {
                                           country_name = input$country_name,
                                           count_start = input$country_count_start,
                                           n = input$country_data)[[1]])['r'])
+    
+    output$plot_curve_compared <- renderPlot(plot_curve(country_names = input$curve_country_list, 
+                                                        data_country_confirmed = data_country_confirmed, 
+                                                        data_country_deaths = data_country_deaths, 
+                                                        data_country_recovered = data_country_recovered))
+    output$plot_breakdown <- renderPlot(plot_breakdown(country_name = input$curve_country_name, 
+                                                       data_country_confirmed = data_country_confirmed, 
+                                                       data_country_deaths = data_country_deaths, 
+                                                       data_country_recovered = data_country_recovered))
 }
 
 
